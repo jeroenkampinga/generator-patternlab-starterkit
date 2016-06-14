@@ -26,6 +26,7 @@ var syntaxScss = require("postcss-scss");
 var chalk = require("chalk");
 var notify = require("gulp-notify");
 var plumber = require('gulp-plumber');
+<% if (includeBackstopjs) { %>var chug = require('gulp-chug');<% } %>
 
 
 var handleError = function (error) {
@@ -55,8 +56,6 @@ var handleError = function (error) {
     // Prevent the 'watch' task from stopping
     this.emit('end');
 }
-
-
 
 
 
@@ -427,6 +426,24 @@ gulp.task('connect', function() {
     });
 });
 
+<% if (includeBackstopjs) { %>
+/*  Visual regression testing
+\*----------------------------------------------------------------------------*/
+
+gulp.task( 'update_tests', function () {
+    gulp.src( config.paths.source.bower + 'backstopjs/gulpfile.js' )
+        .pipe( chug({
+        tasks:  [ 'reference' ]
+    }));
+});
+
+gulp.task( 'run_tests', function () {
+    gulp.src( config.paths.source.bower + 'backstopjs/gulpfile.js' )
+        .pipe( chug({
+        tasks:  [ 'test' ]
+    }));
+});
+<% } %>
 
 
 /*  Task: watch

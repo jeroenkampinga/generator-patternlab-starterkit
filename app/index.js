@@ -83,6 +83,10 @@ var PatternlabGenerator = module.exports = yeoman.generators.Base.extend({
                         name: 'Blocss (~6.0)',
                         value: 'includeBlocss',
                         checked: true
+                    },
+                    {
+                        name: 'BackstopJS (~1.2.1)',
+                        value: 'includeBackstopjs'
                     }
                 ]
             }
@@ -106,6 +110,7 @@ var PatternlabGenerator = module.exports = yeoman.generators.Base.extend({
             this.includeAngular = hasFeature('includeAngular');
             this.includeJquery = hasFeature('includeJquery');
             this.includeBlocss = hasFeature('includeBlocss');
+            this.includeBackstopjs = hasFeature('includeBackstopjs');
             this.projectType = props.projectType;
             this.sameFolder = false;
 
@@ -115,11 +120,16 @@ var PatternlabGenerator = module.exports = yeoman.generators.Base.extend({
                 this.dependencies["angularjs"] = "~1.3.2";
             }
 
+            if ( this.includeBackstopjs /*&& this.taskRunner === "gulp"*/ ) {
+                this.dependencies["backstopjs"] = "~1.2.1";
+
+            }
+
             if ( this.includeJquery ) {
                 this.dependencies["jquery"] = "~2.1.1";
             }
 
-            if ( this.includeBlocss ) {
+            if ( this.includeBlocss) {
                 this.dependencies["blocss"] = "~6.0";
             }
 
@@ -160,8 +170,13 @@ var PatternlabGenerator = module.exports = yeoman.generators.Base.extend({
             this.copy('grunt/_browserSync.js', 'grunt/browserSync.js');
             this.copy('grunt/_merge-json.js', 'grunt/merge-json.js');
             this.copy('grunt/_modernizr.js', 'grunt/modernizr.js');
+            this.copy('grunt/_backstop.js', 'grunt/backstop.js');
         } else if (this.taskRunner === 'gulp') {
             this.template('_gulpfile.js', 'gulpfile.js');
+        }
+
+        if ( this.includeBackstopjs ) {
+            this.template('_backstop.json', this.pathSource + '/backstop.json');
         }
 
         this.copy('_.stylelintrc', '.stylelintrc');
