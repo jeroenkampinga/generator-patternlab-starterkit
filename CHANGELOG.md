@@ -1,5 +1,22 @@
 == HEAD
 
+== 1.4.0 (November 23, 2016)
+
+* Update to PL-node 2.6.1
+* Scripts watcher is now ignoring the right folders
+
+== 1.3.0 (September 20, 2016)
+
+* Made gulp default
+* Removed folder choice
+* Added ES2015 Choice
+* Added Eslint in favour of jshint
+* Optimisations
+
+== 1.2.0 (June 24, 2016)
+
+* Added gulp to the scaffolding choices
+
 == 1.1.2 (April 18, 2016)
 
 * Updated readme
